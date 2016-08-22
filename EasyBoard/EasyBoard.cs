@@ -176,9 +176,13 @@ namespace EasyBoard
         /// <returns>True when crew can board, otherwise false.</returns>
         private bool CrewCanBoard(KerbalEVA kerbal)
         {
-            return kerbal != null
-                && !kerbal.Animations.flagPlant.State.enabled
-                && EventSystem.current.currentSelectedGameObject == null;
+            bool partBoardable = false;
+            ScreenMessages sm = (ScreenMessages)GameObject.FindObjectOfType(typeof(ScreenMessages));
+            for (int msgIndex = 0; msgIndex < sm.ActiveMessages.Count(); msgIndex++)
+            {
+                if (sm.ActiveMessages[msgIndex].message == "[B]: Board") { partBoardable = true; }
+            }
+            return partBoardable;
         }
 
         /// <summary>
